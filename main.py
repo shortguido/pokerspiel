@@ -40,7 +40,12 @@ def checkhand(hand):
         numbers.append(i[1])
     maxcol = colours.count(max(colours, key=colours.count))
     maxnum = numbers.count(max(numbers, key=numbers.count))
+
     numbers.sort()
+    #print(numbers)
+    minnum = numbers[0]
+    #print(maxnum)
+    #print(minnum)
 
     if(maxcol==5):
         if((numbers[0]+numbers[1]+numbers[2]+numbers[3]+numbers[4])==50):
@@ -53,8 +58,14 @@ def checkhand(hand):
         return
 
     if(maxnum == 2):
+        fn = [x for x in numbers if x != max(numbers, key=numbers.count)]
+        if(fn.count(max(fn, key=fn.count)==2)):
+            stats["Two Pair"] += 1
+            return
         stats["Pair"] += 1
         return
+
+
 
     if (maxnum == 3):
         if(numbers.count(min(numbers, key=numbers.count)) != 2):
@@ -88,7 +99,16 @@ def ziehen(min,max,wieoft=5):
 
 
 if __name__ == '__main__':
-    for i in range(1000000):
+    wieviele = 2600000
+
+    for i in range(wieviele):
         ziehung(0,51)
     print(stats)
+    rechnen = list(stats.values())
+    print(rechnen)
+    #Prozente ausgeben
+    for i in range(10):
+        prozent = float(rechnen[i]) * 100 / wieviele
+        print("{:.4f}".format(prozent) + "%")
+
 
