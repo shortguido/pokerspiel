@@ -41,12 +41,15 @@ def checkhand(hand):
     maxcol = colours.count(max(colours, key=colours.count))
     maxnum = numbers.count(max(numbers, key=numbers.count))
 
-    numbers.sort()
-    #print(numbers)
-    minnum = numbers[0]
-    #print(maxnum)
-    #print(minnum)
+    if(maxnum == 2):
+        fn = [x for x in numbers if x != max(numbers, key=numbers.count)]
+        if(fn.count(max(fn, key=fn.count)==2)):
+            stats["Two Pair"] += 1
+            return
+        stats["Pair"] += 1
+        return
 
+    numbers.sort()
     if(maxcol==5):
         if((numbers[0]+numbers[1]+numbers[2]+numbers[3]+numbers[4])==50):
             stats["Royal Flush"] += 1
@@ -56,16 +59,6 @@ def checkhand(hand):
             return
         stats["Flush"] += 1
         return
-
-    if(maxnum == 2):
-        fn = [x for x in numbers if x != max(numbers, key=numbers.count)]
-        if(fn.count(max(fn, key=fn.count)==2)):
-            stats["Two Pair"] += 1
-            return
-        stats["Pair"] += 1
-        return
-
-
 
     if (maxnum == 3):
         if(numbers.count(min(numbers, key=numbers.count)) != 2):
